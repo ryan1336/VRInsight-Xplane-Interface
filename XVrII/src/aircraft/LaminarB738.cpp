@@ -122,5 +122,5 @@ bool LaminarB738::handleCommand(BaseDeviceHandler::VriCommandParameters command)
 
 bool LaminarB738::isLoaded()
 {
-	return (XPLMFindDataRef("laminar/B738/irs_left1") != nullptr);
+	return (XPLMFindDataRef("laminar/B738/ac_freq_mode0") != nullptr);
 }
