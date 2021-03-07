@@ -17,9 +17,13 @@ ZiboB738::ZiboB738()
 	m_refEfisZoomIn = findCommandRef("laminar/B738/EFIS_control/capt/map_range_dn");
 	m_refEfisZoomOut = findCommandRef("laminar/B738/EFIS_control/capt/map_range_up");
 
+	m_refEfisMinsUp   = findCommandRef("laminar/B738/pfd/dh_pilot_up");
+	m_refEfisMinsDown = findCommandRef("laminar/B738/pfd/dh_pilot_dn");
+	m_refEfisBaroUp   = findCommandRef("laminar/B738/pilot/barometer_up");
+	m_refEfisBaroDown = findCommandRef("laminar/B738/pilot/barometer_down");
+
 	m_refObsUp = findCommandRef("laminar/B738/autopilot/course_pilot_up");
 	m_refObsDown = findCommandRef("laminar/B738/autopilot/course_pilot_dn");
-
 }
 
 bool ZiboB738::isLoaded()

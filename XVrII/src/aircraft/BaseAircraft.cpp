@@ -434,8 +434,12 @@ bool BaseAircraft::handleCommand(BaseDeviceHandler::VriCommandParameters command
 	case BaseDeviceHandler::EfisModeDown:
 		efisModeDown();
 		return true;
-	COMMAND(EfisMinsUp);
-	COMMAND(EfisMinsDown);
+	case BaseDeviceHandler::EfisMinsUp:
+		scheduleCommand(m_refEfisMinsUp, command.m_boosted ? 5 : 1);
+		return true;
+	case BaseDeviceHandler::EfisMinsDown:
+		scheduleCommand(m_refEfisMinsDown, command.m_boosted ? 5 : 1);
+		return true;
 	COMMAND(EfisBaroUp);
 	COMMAND(EfisBaroDown);
 	COMMAND(EfisBaroReset);

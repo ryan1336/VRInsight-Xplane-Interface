@@ -51,6 +51,7 @@ LaminarB738::LaminarB738()
 	// Override command from base class
 	m_refTransponderModeUp = findCommandRef("laminar/B738/knob/transponder_mode_up");
 	m_refTransponderModeDown =  findCommandRef("laminar/B738/knob/transponder_mode_dn");
+	m_refEfisBaroReset = findCommandRef("laminar/B738/EFIS_control/capt/push_button/std_press");
 }
 
 #define COMMAND(a) case BaseDeviceHandler::##a: scheduleCommand(m_ref##a); return true;
