@@ -39,10 +39,10 @@ public:
 		AptAltHold, AptAltSel, AltNNNup, AltNNNdn,
 		AptHdgHold, AptHdgSel, HdgNNNup, HdgNNNdn,
 		AptFlch, AptN1, AptSpd, AptSpdSel,  SpdNNNup, SpdNNNdn, SpdNNN, 
-		AptVsUp, AptVsDown,
+		AptVsUp, AptVsDown, AptVsSel,
 
 		AptMasterConnect, AptMasterDisconnect, AptAtArm, AptAtDisarm, AptFdArm, AptFdDisarm,
-		AptCmdA, AptCmdB, AptCmdC, AptCwsA, AptCwsB, AptToGa,
+		AptCmdA, AptCmdB, AptCmdC, AptCwsA, AptCwsB, AptToGa1, AptToGa2,
 		AptApp, AptLNav, AptVNav, AptLoc, AptVvsHold,
 		
 
@@ -53,7 +53,7 @@ public:
 		EfisMinsUp, EfisMinsDown, EfisMinsReset,
 		EfisCtr, EfisTfc, 
 
-		ObsUp, ObsDown,
+		ObsUp, ObsDown, ObsSel,
 
 		ComSel1, ComSel2, ComAux, Com1SNNN, Com1XNNN, Com2SNNN, Com2XNNN,
 		NavSel1, NavSel2, NavAux, Nav1SNNN, Nav1XNNN, Nav2SNNN, Nav2XNNN,

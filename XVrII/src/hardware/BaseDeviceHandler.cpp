@@ -59,7 +59,7 @@ void BaseDeviceHandler::displayIdent1(char *display)
 	if (identPrefix1() == nullptr)
 		return;
 	
-	char szCommand[9];
+	char szCommand[16];
 	strncpy(szCommand, identPrefix1(), 8);
 	strncat(szCommand, display, 8);
 	m_commPort->send(szCommand);
@@ -70,7 +70,7 @@ void BaseDeviceHandler::displayIdent2(char *display)
 	if (identPrefix2() == nullptr)
 		return;
 
-	char szCommand[9];
+	char szCommand[16];
 	strncpy(szCommand, identPrefix2(), 8);
 	strncat(szCommand, display, 8);
 	m_commPort->send(szCommand);

@@ -42,7 +42,8 @@ BaseAircraft::BaseAircraft()
 	m_refEfisMinsUp = findCommandRef("sim/instruments/dh_ref_up");
 	m_refEfisMinsDown = findCommandRef("sim/instruments/dh_ref_down");
 
-	m_refAptToGa = findCommandRef("sim/engines/TOGA_power");
+	m_refAptToGa1 = findCommandRef("sim/engines/TOGA_power");
+	m_refAptToGa2 = m_refAptToGa2;
 
 	m_refObsUp = findCommandRef("sim/radios/obs1_up");
 	m_refObsDown = findCommandRef("sim/radios/obs1_down");
@@ -443,7 +444,8 @@ bool BaseAircraft::handleCommand(BaseDeviceHandler::VriCommandParameters command
 	COMMAND(EfisBaroUp);
 	COMMAND(EfisBaroDown);
 	COMMAND(EfisBaroReset);
-	COMMAND(AptToGa);
+	COMMAND(AptToGa1);
+	COMMAND(AptToGa2);
 	COMMAND(ObsUp);
 	COMMAND(ObsDown);
 	COMMAND(AptVsUp);
