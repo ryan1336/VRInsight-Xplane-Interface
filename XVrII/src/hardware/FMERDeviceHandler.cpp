@@ -361,24 +361,35 @@ BaseDeviceHandler::VriCommandParameters FMERDeviceHandler::s(char *message, VriC
 		break;
 	default:
 		{
-			if (message[3] >= '0' && message[3] <= '9')
+			bool isMach = false;
+			
+			if (message[3] == ':')
 			{
-				command.m_value = (float)(((message[3] - '0') * 10) + (message[4] - '0')) * 10 + (message[5] - '0');
-				switch (message[6])
-				{
-				case '-':
-					command.m_command = SpdNNNdn;
-					break;
-				case '+':
-					command.m_command = SpdNNNup;
-					break;
-				default:
-					command.m_command = SpdNNN;
-					break;
-				}
+				// We use this as a Mach indication
+				message[3] = '0';
+				isMach = true;
 			}
-			else
+			
+			if (!(message[3] >= '0' && message[3] <= '9'))
 				break;
+			
+			command.m_value = (float)(((message[3] - '0') * 10) + (message[4] - '0')) * 10 + (message[5] - '0');
+			if (isMach)
+				// Mach values are represented as fractional
+				command.m_value /= 100;
+			
+			switch (message[6])
+			{
+			case '-':
+				command.m_command = SpdNNNdn;
+				break;
+			case '+':
+				command.m_command = SpdNNNup;
+				break;
+			default:
+				command.m_command = SpdNNN;
+				break;
+			}
 		}
 	}
 
