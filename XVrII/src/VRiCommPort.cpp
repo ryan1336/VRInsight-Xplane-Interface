@@ -236,7 +236,7 @@ void VRiCommPort::poll()
 				{
 					// MCP Combo I found
 					std::chrono::duration<double> scanTime = std::chrono::system_clock::now() - start;
-					VLLog("Indentified FMER (MCP Combo I) on <%s> after %.2f seconds", m_szPortName, scanTime.count());
+					VLLog("Identified FMER (MCP Combo I) on <%s> after %.2f seconds", m_szPortName, scanTime.count());
 					m_parser = new FMERDeviceHandler(this);
 					m_status = Status::Found;
 				}
@@ -244,7 +244,7 @@ void VRiCommPort::poll()
 				{
 					// M-Panel found
 					std::chrono::duration<double> scanTime = std::chrono::system_clock::now() - start;
-					VLLog("Indentified MPanl (M-Panel) on <%s> after %.2f seconds", m_szPortName, scanTime.count());
+					VLLog("Identified MPanl (M-Panel) on <%s> after %.2f seconds", m_szPortName, scanTime.count());
 					m_parser = new MPANLDeviceHandler(this);
 					m_status = Status::Found;
 				}

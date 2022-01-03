@@ -68,8 +68,8 @@ BaseDeviceHandler::VriCommandParameters FMERDeviceHandler::a(char *message, VriC
 		else if (strncmp("LNAV", subcmd, 4) == 0) command.m_command = AptLNav;				// combines LNAV+ and LNAV-
 		else if (strncmp("MAST+", subcmd, 5) == 0) command.m_command = AptMasterConnect;
 		else if (strncmp("MAST-", subcmd, 5) == 0) command.m_command = AptMasterDisconnect;
-		else if (strncmp("TOGA", subcmd, 4) == 0) command.m_command = AptToGa;				// combines TOGA+, TOGA-, TOGN+, TOGN-
-		else if (strncmp("TOGN", subcmd, 4) == 0) command.m_command = AptToGa;				// combines TOGA+, TOGA-, TOGN+, TOGN-
+		else if (strncmp("TOGA", subcmd, 4) == 0) command.m_command = AptToGa1;				// combines TOGA+, TOGA-
+		else if (strncmp("TOGN", subcmd, 4) == 0) command.m_command = AptToGa2;				// combines TOGN+, TOGN-
 		else if (strncmp("VNAV", subcmd, 4) == 0) command.m_command = AptVNav;				// combines VNAV+ and VNAV-
 	}
 	
@@ -335,6 +335,7 @@ BaseDeviceHandler::VriCommandParameters FMERDeviceHandler::o(char *message, VriC
 
 		if (strncmp("+", subcmd, 1) == 0) command.m_command = ObsUp;
 		else if (strncmp("-", subcmd, 1) == 0) command.m_command = ObsDown;
+		else if (strncmp("SEL", subcmd, 3) == 0) command.m_command = ObsSel;
 	}
 
 	return (command.m_command == None ? BaseDeviceHandler::o(message, command) : command);
@@ -361,24 +362,35 @@ BaseDeviceHandler::VriCommandParameters FMERDeviceHandler::s(char *message, VriC
 		break;
 	default:
 		{
-			if (message[3] >= '0' && message[3] <= '9')
+			bool isMach = false;
+			
+			if (message[3] == ':')
 			{
-				command.m_value = (float)(((message[3] - '0') * 10) + (message[4] - '0')) * 10 + (message[5] - '0');
-				switch (message[6])
-				{
-				case '-':
-					command.m_command = SpdNNNdn;
-					break;
-				case '+':
-					command.m_command = SpdNNNup;
-					break;
-				default:
-					command.m_command = SpdNNN;
-					break;
-				}
+				// We use this as a Mach indication
+				message[3] = '0';
+				isMach = true;
 			}
-			else
+			
+			if (!(message[3] >= '0' && message[3] <= '9'))
 				break;
+			
+			command.m_value = (float)(((message[3] - '0') * 10) + (message[4] - '0')) * 10 + (message[5] - '0');
+			if (isMach)
+				// Mach values are represented as fractional
+				command.m_value /= 100;
+			
+			switch (message[6])
+			{
+			case '-':
+				command.m_command = SpdNNNdn;
+				break;
+			case '+':
+				command.m_command = SpdNNNup;
+				break;
+			default:
+				command.m_command = SpdNNN;
+				break;
+			}
 		}
 	}
 
@@ -422,6 +434,9 @@ BaseDeviceHandler::VriCommandParameters FMERDeviceHandler::v(char *message, VriC
 	{
 	case 'H':
 		command.m_command = AptVvsHold;
+		break;
+	case 'S':
+		command.m_command = AptVsSel;
 		break;
 	case '-':
 		command.m_command = AptVsDown;

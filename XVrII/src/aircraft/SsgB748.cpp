@@ -55,7 +55,8 @@ SsgB748::SsgB748()
 
 	m_refApMaster = findCommandRef("SSG/UFMC/AP_discon_Button");
 
-	m_refAptToGa = findCommandRef("SSG/UFMC/TOGA_Button");
+	m_refAptToGa1 = findCommandRef("SSG/UFMC/TOGA_Button");
+	m_refAptToGa2 = m_refAptToGa1;
 
 	m_refNdMode = findDataRef("ssg/B748/ND/mode_pilot");
 	m_ndMode = XPLMGetDataf(m_refNdMode);

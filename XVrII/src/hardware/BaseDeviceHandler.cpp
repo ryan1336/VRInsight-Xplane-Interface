@@ -59,7 +59,7 @@ void BaseDeviceHandler::displayIdent1(char *display)
 	if (identPrefix1() == nullptr)
 		return;
 	
-	char szCommand[9];
+	char szCommand[16];
 	strncpy(szCommand, identPrefix1(), 8);
 	strncat(szCommand, display, 8);
 	m_commPort->send(szCommand);
@@ -70,7 +70,7 @@ void BaseDeviceHandler::displayIdent2(char *display)
 	if (identPrefix2() == nullptr)
 		return;
 
-	char szCommand[9];
+	char szCommand[16];
 	strncpy(szCommand, identPrefix2(), 8);
 	strncat(szCommand, display, 8);
 	m_commPort->send(szCommand);
@@ -79,21 +79,32 @@ void BaseDeviceHandler::displayIdent2(char *display)
 void BaseDeviceHandler::displayMcpSpeed(float speed, bool isMach)
 {
 	char command[16];
-	sprintf(command, "SPD%03.0f\0\0", speed);
+    char *format = "SPD%03.0f  ";
+	
+	if (isMach || speed < 1.0) // temporary: isMach isn't being set
+	{
+		speed *= 100;
+		// We can't display .nn, because characters are coerced to
+		// have an upper nibble of 3, but we can display 0nn
+		format = "SPD:%02.0f  ";
+	}
+	// Note: The MCP won't allow the speed to cross from 100 to 99
+	//       by turning the SPD control
+	sprintf(command, format, speed);
 	m_commPort->send(command);
 }
 
 void BaseDeviceHandler::displayMcpHeading(float heading)
 {
 	char command[16];
-	sprintf(command, "HDG%03.0f\0\0", heading);
+	sprintf(command, "HDG%03.0f  ", heading);
 	m_commPort->send(command);
 }
 
 void BaseDeviceHandler::displayMcpAltitude(float altitude)
 {
 	char command[16];
-	sprintf(command, "ALT%03.0f\0\0", (altitude / 100));
+	sprintf(command, "ALT%03.0f  ", (altitude / 100));
 	m_commPort->send(command);
 }
 
@@ -135,7 +146,7 @@ void BaseDeviceHandler::displayRadio(VriRadioDisplay radioDisplay, int frequency
 
 void BaseDeviceHandler::displayDme1(float distance, float speed, float course, char *ident)
 {
-	char command[9];
+	char command[16];
 
 	sprintf(command, "DMEd%04u", (int)(distance * 10.0));
 	sendIfChanged(command, m_dmeDistance);
@@ -148,13 +159,13 @@ void BaseDeviceHandler::displayDme1(float distance, float speed, float course, c
 
 	strcpy(command, "DMi");
 	strncat(command, ident, 5);
-	strncat(command, "        ", 8);
+	strncat(command, "     ", 5);
 	sendIfChanged(command, m_dmeIdent);
 }
 
 void BaseDeviceHandler::displayDme2(float distance, float speed, float course, char *ident)
 {
-	char command[9];
+	char command[16];
 
 	sprintf(command, "DMED%04u", (int)(distance * 10.0));
 	sendIfChanged(command, m_dmeDistance);
@@ -167,7 +178,7 @@ void BaseDeviceHandler::displayDme2(float distance, float speed, float course, c
 
 	strcpy(command, "DMI");
 	strncat(command, ident, 5);
-	strncat(command, "        ", 8);
+	strncat(command, "     ", 5);
 	sendIfChanged(command, m_dmeIdent);
 }
 

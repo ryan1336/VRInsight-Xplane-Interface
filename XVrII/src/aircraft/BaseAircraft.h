@@ -72,7 +72,8 @@ protected:
 	XPLMCommandRef m_refEfisMinsUp;
 	XPLMCommandRef m_refEfisMinsDown;
 
-	XPLMCommandRef m_refAptToGa;
+	XPLMCommandRef m_refAptToGa1;
+	XPLMCommandRef m_refAptToGa2;
 
 	XPLMCommandRef m_refObsUp;
 	XPLMCommandRef m_refObsDown;
